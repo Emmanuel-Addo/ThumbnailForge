@@ -1,13 +1,15 @@
-import { useState } from 'react'
 import HeroSection from '../components/HeroSection'
 // import FeatureSection from '../components/FeatureSection'
 import ProcessSection from '../components/ProcessSection'
 import Testimonials from '../components/Testimonails'
 import Footer from '../components/Footer'
 
-const Home = () => {
-  const [darkMode, setDarkMode] = useState(false)
+type HomeProps = {
+  darkMode: boolean;
+  setDarkMode: (value: boolean) => void;
+};
 
+const Home = ({ darkMode, setDarkMode }: HomeProps) => {
   return (
     <div className={darkMode ? "bg-gray-950 text-white" : "bg-white text-gray-900"}>
       <HeroSection darkMode={darkMode} setDarkMode={setDarkMode} />
@@ -19,4 +21,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home
