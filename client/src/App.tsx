@@ -28,18 +28,12 @@ const App = () => {
       {/* Landing page */}
       <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />} />
 
-      {/* Legacy/Shortcut redirects */}
-      <Route path="/generate" element={<Navigate to="/dashboard/generate" replace />} />
-      <Route path="/recreate" element={<Navigate to="/dashboard/recreate" replace />} />
-      <Route path="/dashbaord/*" element={<Navigate to="/dashboard" replace />} /> {/* Catch common typos */}
-
-      {/* Dashboard Nested Routes */}
-      <Route path="/dashboard" element={<DashboardLayout darkMode={darkMode} setDarkMode={setDarkMode} />}>
-        <Route index element={<Navigate to="/dashboard/generate" replace />} />
-        <Route path="generate" element={<Generate />} />
-        <Route path="recreate" element={<Recreate />} />
+      {/* Dashboard Routes with Shared Layout */}
+      <Route element={<DashboardLayout />}>
+        <Route path="/generate" element={<Generate />} />
+        <Route path="/recreate" element={<Recreate />} />
         <Route 
-          path="community" 
+          path="/community" 
           element={
             <DashboardPlaceholder 
               title="Community Creations" 
@@ -48,7 +42,7 @@ const App = () => {
           } 
         />
         <Route 
-          path="profile" 
+          path="/profile" 
           element={
             <DashboardPlaceholder 
               title="My Gallery" 
@@ -57,7 +51,7 @@ const App = () => {
           } 
         />
         <Route 
-          path="settings" 
+          path="/settings" 
           element={
             <DashboardPlaceholder 
               title="Account Settings" 
@@ -66,6 +60,11 @@ const App = () => {
           } 
         />
       </Route>
+
+      {/* Redirects */}
+      <Route path="/dashboard" element={<Navigate to="/generate" replace />} />
+      <Route path="/dashboard/*" element={<Navigate to="/generate" replace />} />
+      <Route path="/dashbaord/*" element={<Navigate to="/generate" replace />} /> {/* Catch common typos */}
 
       {/* Catch-all redirect to Home */}
       <Route path="*" element={<Navigate to="/" replace />} />

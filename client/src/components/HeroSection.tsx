@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ThumbnailFeatures from "./thumbnailFeatures"
 import TrustedBrand from "./trustedBrand"
 
@@ -13,6 +14,7 @@ type HeroSectionProps = {
 export default function LandingPage({ darkMode, setDarkMode }: HeroSectionProps) {
   const [prompt, setPrompt] = useState("");
   const [focused, setFocused] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className={`font-sans relative overflow-hidden ${darkMode ? "bg-gray-950 text-white" : "bg-white text-gray-900"}`}>
@@ -95,7 +97,10 @@ export default function LandingPage({ darkMode, setDarkMode }: HeroSectionProps)
               E
             </div>
 
-            <button className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-colors shadow-md">
+            <button 
+              onClick={() => navigate("/generate")}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-colors shadow-md cursor-pointer"
+            >
               Generate
               <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
@@ -146,9 +151,14 @@ export default function LandingPage({ darkMode, setDarkMode }: HeroSectionProps)
           />
           <div className="flex justify-end mt-3">
             <button
+              onClick={() => {
+                if (prompt.trim()) {
+                  navigate("/generate", { state: { initialPrompt: prompt } });
+                }
+              }}
               className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all border
                 ${prompt.trim()
-                  ? "bg-green-600 hover:bg-green-700 text-white border-green-600 shadow-md"
+                  ? "bg-green-600 hover:bg-green-700 text-white border-green-600 shadow-md cursor-pointer"
                   : darkMode
                     ? "bg-gray-800 text-gray-400 border-gray-700 cursor-default"
                     : "bg-gray-100 text-gray-400 border-gray-200 cursor-default"
